@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="form">
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}}">{{message}}</div>
+    {% endfor %}
+    {% endif %}
+
+    <h1 class="text-info">Contacts</h1>
+    <p><a href="#" class="text-success open-btn">&plus; Add a Contact</a></p>
+    <div class="add-modal" id="modal-form">
+
+        <form action="" method="post">
+            <h3 class="text-primary">Create a Contact</h3>
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="phone_number">Phone Number</label>
+                <input type="text" name="phone_number" id="phone_number" class="form-control" required>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="button" class="btn btn-danger" onclick="closeModal('modal-form')">Cancel</button>
+        </form>
+    </div>
+    <br>
+    <ul class="list-group">
+
+        {% for task in tasks %}
+        <li class="list-group-item">
+            <h4 class="text-info">{{task.name}}</h4>
+            <div class="details">
+                <h4>{{task.phone_number}}</h4>
+                <div class="options">
+                    <a href="/update/{{task.id}}" class="text-primary">Update</i></a>
+                    <a href="/delete/{{task.id}}" class="text-danger">Delete</a>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+
+    </ul>
+</div>
+{% endblock body %}
